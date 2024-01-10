@@ -1,0 +1,16 @@
+name: Test for skillfactory
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.html'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Nginx install
+        run: docker run -p 9889:80 nginx:alpine
+        
+    
