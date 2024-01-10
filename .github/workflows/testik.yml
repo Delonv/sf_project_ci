@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Nginx install
-        run: docker run -p 9889:80 nginx:alpine
+        run: docker run --name skillnginx -p 80:9889 -d nginx:alpine
         
     
