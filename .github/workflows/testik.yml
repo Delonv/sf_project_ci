@@ -4,7 +4,7 @@ on:
     branches: [ main ]
     paths:
       - '**.html'
-
+      
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,5 +12,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Nginx install
         run: docker run --name skillnginx -p 80:9889 -d nginx:alpine
+      - run: bash "$(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:9889/api/health)" == "200" 
+      - run: bash -c 'while [[ "$(curl --insecure -s -o /dev/null -w ''%{http_code}'' https://localhost:9889)" != "200" ]]; do sleep 5; done'
+      - run: wget -q -O- localhost:9889 | md5sum | sed 's:-$:delons-pc:' | md5sum -c
+      
         
     
