@@ -14,8 +14,13 @@ jobs:
         run: docker run --name skillnginx -p 80:9889 -d nginx:alpine
       - run: bash "$(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:9889/api/health)" == "200"  
       - run: wget -q -O- localhost:9889 | md5sum | sed 's:-$:delons-pc:' | md5sum -c 
-     # - run: Для уведов
+      - name: Notify
+        run: bash 'apk --no-cache add curl'
+      - run:  'curl -X POST -H "Content-Type: application/json" -d "{\1727784260\": \"1727784260\", \"text\": \"CI: new version was uploaded, see: https://preview.startup.com\"}" https://api.telegram.org/bot5919810095:AAEXsFiOfopRydC8yERnNBGa0kC18iNyhYQ/sendMessage '
       - run: docker run --rm
+
+
+
 
         
  # - run: bash -c 'while [[ "$(curl --insecure -s -o /dev/null -w ''%{http_code}'' https://localhost:9889)" != "200" ]]; do sleep 5; done' #
